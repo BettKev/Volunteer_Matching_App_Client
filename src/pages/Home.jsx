@@ -1,4 +1,5 @@
 import React from "react";
+import AboutUsImage from "../assets/helpneeded_large.png"; // Adjust the path based on your folder structure
 
 const Home = () => {
   return (
@@ -23,7 +24,7 @@ const Home = () => {
       <div className="row mt-5">
         <div className="col-md-6">
           <img
-            src="https://via.placeholder.com/500x300"
+            src={AboutUsImage}
             alt="About Us"
             className="img-fluid rounded shadow"
           />
