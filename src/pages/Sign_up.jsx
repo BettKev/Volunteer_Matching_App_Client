@@ -5,7 +5,7 @@ const Signup = () => {
     name: "",
     email: "",
     password: "",
-    role: "volunteer", // Default role can be set here
+    role: "volunteer", // Default role
   });
 
   const [message, setMessage] = useState("");
@@ -52,14 +52,14 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="p-8 bg-white shadow-md rounded-lg max-w-md w-full">
-        <h1 className="text-2xl font-bold mb-4">Sign Up</h1>
-        {message && <div className="text-green-500 mb-4">{message}</div>}
-        {error && <div className="text-red-500 mb-4">{error}</div>}
+    <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
+      <div className="card shadow-lg p-4" style={{ width: "100%", maxWidth: "400px" }}>
+        <h1 className="text-center mb-4">Sign Up</h1>
+        {message && <div className="alert alert-success">{message}</div>}
+        {error && <div className="alert alert-danger">{error}</div>}
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+          <div className="mb-3">
+            <label htmlFor="name" className="form-label">
               Name
             </label>
             <input
@@ -68,13 +68,13 @@ const Signup = () => {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              className="form-control"
               required
             />
           </div>
 
-          <div className="mb-4">
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+          <div className="mb-3">
+            <label htmlFor="email" className="form-label">
               Email
             </label>
             <input
@@ -83,13 +83,13 @@ const Signup = () => {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              className="form-control"
               required
             />
           </div>
 
-          <div className="mb-4">
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+          <div className="mb-3">
+            <label htmlFor="password" className="form-label">
               Password
             </label>
             <input
@@ -98,13 +98,13 @@ const Signup = () => {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              className="form-control"
               required
             />
           </div>
 
-          <div className="mb-4">
-            <label htmlFor="role" className="block text-sm font-medium text-gray-700">
+          <div className="mb-3">
+            <label htmlFor="role" className="form-label">
               Role
             </label>
             <select
@@ -112,7 +112,7 @@ const Signup = () => {
               name="role"
               value={formData.role}
               onChange={handleChange}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              className="form-select"
               required
             >
               <option value="volunteer">Volunteer</option>
@@ -120,10 +120,7 @@ const Signup = () => {
             </select>
           </div>
 
-          <button
-            type="submit"
-            className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-          >
+          <button type="submit" className="btn btn-primary w-100">
             Sign Up
           </button>
         </form>
