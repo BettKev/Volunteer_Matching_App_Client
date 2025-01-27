@@ -5,7 +5,7 @@ const Home = () => {
     <div className="container mt-5">
       {/* Hero Section */}
       <div className="bg-light p-5 rounded-lg text-center shadow">
-        <h1 className="display-4 fw-bold">Welcome to My Website</h1>
+        <h1 className="display-4 fw-bold">Volunteer Matching</h1>
         <p className="lead mt-3">
           Discover opportunities, connect with others, and make a difference.
         </p>
