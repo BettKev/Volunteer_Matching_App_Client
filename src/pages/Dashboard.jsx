@@ -60,9 +60,9 @@ const Dashboard = () => {
             </Link>
           </li>
           <li className="nav-item">
-            <a href="#" className="nav-link text-white">
+            <Link to="/settings" className="nav-link text-white">
               Settings
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
             <a href="#" className="nav-link text-white" onClick={handleLogout}>
