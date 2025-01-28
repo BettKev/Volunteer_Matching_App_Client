@@ -1,6 +1,30 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+  const apiUrl = "http://localhost:5000"
+
+  const handleLogout = () => {
+    // Remove the JWT token from localStorage or sessionStorage
+    localStorage.removeItem("access_token");
+
+    // Optionally, you can call the logout route to inform the server (optional)
+    fetch(`${apiUrl}/logout`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data.message); // "Logout successful!" message
+      })
+      .catch((error) => console.error("Logout error:", error));
+
+    // Redirect user to the login page or home page
+    navigate("/login");
+  };
   return (
     <div className="d-flex vh-100">
       {/* Sidebar */}
@@ -23,9 +47,9 @@ const Dashboard = () => {
             </a>
           </li>
           <li className="nav-item">
-            <a href="#" className="nav-link text-white">
-              Logout
-            </a>
+          <a href="#" className="nav-link text-white" onClick={handleLogout}>
+                Logout
+              </a>
           </li>
         </ul>
       </div>
