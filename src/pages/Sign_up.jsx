@@ -1,53 +1,55 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
-    role: "volunteer", // Default role
+    role: "volunteer",
   });
-
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate(); // Initialize the navigate function
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
     setError("");
+    setFieldErrors({});
+    setIsLoading(true);
 
     try {
       const response = await fetch("http://localhost:5000/register", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-
       const data = await response.json();
 
       if (response.ok) {
         setMessage(data.message);
-        setFormData({
-          name: "",
-          email: "",
-          password: "",
-          role: "volunteer",
-        });
+        setFormData({ name: "", email: "", password: "", role: "volunteer" });
+
+        // Redirect to the login page after a brief delay
+        setTimeout(() => navigate("/login"), 2000);
+      } else if (data.error && typeof data.error === "object") {
+        setFieldErrors(data.error);
       } else {
-        setError(data.error);
+        setError(data.error || "An error occurred.");
       }
     } catch (error) {
       setError("An error occurred. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -59,9 +61,7 @@ const Signup = () => {
         {error && <div className="alert alert-danger">{error}</div>}
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
-            <label htmlFor="name" className="form-label">
-              Name
-            </label>
+            <label htmlFor="name" className="form-label">Name</label>
             <input
               type="text"
               id="name"
@@ -71,12 +71,11 @@ const Signup = () => {
               className="form-control"
               required
             />
+            {fieldErrors.name && <small className="text-danger">{fieldErrors.name}</small>}
           </div>
 
           <div className="mb-3">
-            <label htmlFor="email" className="form-label">
-              Email
-            </label>
+            <label htmlFor="email" className="form-label">Email</label>
             <input
               type="email"
               id="email"
@@ -86,12 +85,11 @@ const Signup = () => {
               className="form-control"
               required
             />
+            {fieldErrors.email && <small className="text-danger">{fieldErrors.email}</small>}
           </div>
 
           <div className="mb-3">
-            <label htmlFor="password" className="form-label">
-              Password
-            </label>
+            <label htmlFor="password" className="form-label">Password</label>
             <input
               type="password"
               id="password"
@@ -101,12 +99,11 @@ const Signup = () => {
               className="form-control"
               required
             />
+            {fieldErrors.password && <small className="text-danger">{fieldErrors.password}</small>}
           </div>
 
           <div className="mb-3">
-            <label htmlFor="role" className="form-label">
-              Role
-            </label>
+            <label htmlFor="role" className="form-label">Role</label>
             <select
               id="role"
               name="role"
@@ -118,10 +115,11 @@ const Signup = () => {
               <option value="volunteer">Volunteer</option>
               <option value="organization">Organization</option>
             </select>
+            {fieldErrors.role && <small className="text-danger">{fieldErrors.role}</small>}
           </div>
 
-          <button type="submit" className="btn btn-primary w-100">
-            Sign Up
+          <button type="submit" className="btn btn-primary w-100" disabled={isLoading}>
+            {isLoading ? "Submitting..." : "Sign Up"}
           </button>
         </form>
       </div>
