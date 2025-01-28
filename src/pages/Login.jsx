@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
 
 function Login() {
-  const apiUrl = "http://localhost:5000"
+  const apiUrl = "http://localhost:5000/user"
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");  // To show any errors
