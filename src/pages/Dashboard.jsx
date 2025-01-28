@@ -3,28 +3,46 @@ import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const apiUrl = "http://localhost:5000"
+  const apiUrl = "http://localhost:5000/user"
 
   const handleLogout = () => {
-    // Remove the JWT token from localStorage or sessionStorage
-    localStorage.removeItem("access_token");
-
-    // Optionally, you can call the logout route to inform the server (optional)
+    // Get the JWT token from localStorage (or sessionStorage)
+    const token = localStorage.getItem("access_token");
+  
+    if (!token) {
+      console.error("No token found. Redirecting to login...");
+      navigate("/login");
+      return;
+    }
+  
+    // Call the logout route to inform the server
     fetch(`${apiUrl}/logout`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // Add the token to the Authorization header
       },
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Logout failed: ${response.statusText}`);
+        }
+        return response.json();
+      })
       .then((data) => {
         console.log(data.message); // "Logout successful!" message
+  
+        // Remove the token from localStorage
+        localStorage.removeItem("access_token");
+  
+        // Redirect the user to the login page
+        navigate("/login");
       })
-      .catch((error) => console.error("Logout error:", error));
-
-    // Redirect user to the login page or home page
-    navigate("/login");
+      .catch((error) => {
+        console.error("Logout error:", error);
+      });
   };
+  
   return (
     <div className="d-flex vh-100">
       {/* Sidebar */}
