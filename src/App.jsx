@@ -8,8 +8,8 @@ import Contact from "./pages/Contact";
 import Signup from "./pages/Sign_up";
 import Login from "./pages/Login"
 import Dashboard from "./pages/Dashboard";
-import Profile from "./pages/Profile";
-import Settings from "./pages/Settings";
+import Profile from "./components/Profile";
+import Settings from "./components/Settings";
 const App = () => {
   return (
     <Router>
