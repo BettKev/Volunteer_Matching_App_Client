@@ -79,33 +79,10 @@ const Dashboard = () => {
 
         {/* Example Cards */}
         <div className="row">
-          <div className="col-md-4">
+          <div className="col-md-12">
             <div className="card shadow-sm">
               <div className="card-body">
                 <h5 className="card-title">Card 1</h5>
-                <p className="card-text">Some quick example text to build on the card title.</p>
-                <a href="#" className="btn btn-primary">
-                  View More
-                </a>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-4">
-            <div className="card shadow-sm">
-              <div className="card-body">
-                <h5 className="card-title">Card 2</h5>
-                <p className="card-text">Another example text to build on the card title.</p>
-                <a href="#" className="btn btn-primary">
-                  View More
-                </a>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-4">
-            <div className="card shadow-sm">
-              <div className="card-body">
-                <h5 className="card-title">Card 3</h5>
-                <p className="card-text">Yet another example text for the card title.</p>
                 <a href="#" className="btn btn-primary">
                   View More
                 </a>
