@@ -1,20 +1,20 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const apiUrl = "http://localhost:5000/user"
+  const apiUrl = "http://localhost:5000/user";
 
   const handleLogout = () => {
     // Get the JWT token from localStorage (or sessionStorage)
     const token = localStorage.getItem("access_token");
-  
+
     if (!token) {
       console.error("No token found. Redirecting to login...");
       navigate("/login");
       return;
     }
-  
+
     // Call the logout route to inform the server
     fetch(`${apiUrl}/logout`, {
       method: "POST",
@@ -31,10 +31,10 @@ const Dashboard = () => {
       })
       .then((data) => {
         console.log(data.message); // "Logout successful!" message
-  
+
         // Remove the token from localStorage
         localStorage.removeItem("access_token");
-  
+
         // Redirect the user to the login page
         navigate("/login");
       })
@@ -42,7 +42,7 @@ const Dashboard = () => {
         console.error("Logout error:", error);
       });
   };
-  
+
   return (
     <div className="d-flex vh-100">
       {/* Sidebar */}
@@ -50,14 +50,14 @@ const Dashboard = () => {
         <h4 className="text-center">Dashboard</h4>
         <ul className="nav flex-column mt-4">
           <li className="nav-item">
-            <a href="#" className="nav-link text-white">
-              Home
-            </a>
+            <Link to="/" className="nav-link text-white">
+              Dashboard
+            </Link>
           </li>
           <li className="nav-item">
-            <a href="#" className="nav-link text-white">
+            <Link to="/profile" className="nav-link text-white">
               Profile
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
             <a href="#" className="nav-link text-white">
@@ -65,9 +65,9 @@ const Dashboard = () => {
             </a>
           </li>
           <li className="nav-item">
-          <a href="#" className="nav-link text-white" onClick={handleLogout}>
-                Logout
-              </a>
+            <a href="#" className="nav-link text-white" onClick={handleLogout}>
+              Logout
+            </a>
           </li>
         </ul>
       </div>

@@ -8,6 +8,7 @@ import Contact from "./pages/Contact";
 import Signup from "./pages/Sign_up";
 import Login from "./pages/Login"
 import Dashboard from "./pages/Dashboard";
+import Profile from "./pages/Profile";
 const App = () => {
   return (
     <Router>
@@ -20,6 +21,7 @@ const App = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="login" element={<Login />} />
           <Route path="dashboard" element={<Dashboard />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </Layout>
     </Router>
