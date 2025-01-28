@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate , Link} from "react-router-dom";
 
 const Signup = () => {
+  // Variable to hold base api endpoint
+  const apiUrl = "http://localhost:5000"
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -28,7 +30,7 @@ const Signup = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/register", {
+      const response = await fetch(`${apiUrl}/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

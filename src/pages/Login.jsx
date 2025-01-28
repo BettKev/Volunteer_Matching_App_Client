@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
 
 function Login() {
+  const apiUrl = "http://localhost:5000"
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");  // To show any errors
@@ -15,7 +16,7 @@ function Login() {
 
     // Send a POST request to the Flask login route
     try {
-      const response = await fetch("http://localhost:5000/login", {
+      const response = await fetch(`${apiUrl}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
