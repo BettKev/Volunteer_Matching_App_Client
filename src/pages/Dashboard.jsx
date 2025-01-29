@@ -51,33 +51,40 @@ const Dashboard = () => {
     navigate("/login");
   };
 
-  const handleDeleteProject = (projectId) => {
+  const handleDeleteProject = async (projectId) => {
     if (!window.confirm("Are you sure you want to delete this project? This action cannot be undone.")) {
       return;
     }
-
+  
     const token = localStorage.getItem("access_token");
-    fetch(`${apiUrl}/projects/${projectId}`, {
-      method: "DELETE",
-      headers: {
-        "Authorization": `Bearer ${token}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.success) {
-          // Remove the deleted project from the state
-          setProjects(projects.filter(project => project.project_id !== projectId));
-        } else {
-          console.error("Error deleting project:", data.error);
-        }
-      })
-      .catch((error) => console.error("Error deleting project:", error));
+  
+    try {
+      const response = await fetch(`${apiUrl}/projects/${projectId}`, {
+        method: "DELETE",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
+      });
+  
+      const data = await response.json();
+  
+      if (data.success) {
+        alert("Project deleted successfully!");
+        setProjects((prevProjects) => prevProjects.filter(project => project.project_id !== projectId));
+      } else {
+        alert(`Error: ${data.message}`);
+      }
+    } catch (error) {
+      console.error("Error deleting project:", error);
+      alert("An error occurred while deleting the project.");
+    }
   };
+  
 
-  const handleUpdateProject = (projectId) => {
-    navigate(`/projects/${projectId}/edit`);
-  };
+const handleUpdateProject = (projectId) => {
+  navigate(`/projects/${projectId}/edit`);
+};
+
 
   const handleApplyToProject = (projectId) => {
     const token = localStorage.getItem("access_token");
@@ -172,12 +179,10 @@ const Dashboard = () => {
                     {/* Conditional rendering based on user role */}
                     {role === "organization" && (
                       <div className="mt-3 d-flex justify-content-between">
-                        <button
-                          className="btn btn-warning"
-                          onClick={() => handleUpdateProject(project.project_id)}
-                        >
+                        <button className="btn btn-warning" onClick={() => handleUpdateProject(project.project_id)}>
                           Update
                         </button>
+
                         <button
                           className="btn btn-danger"
                           onClick={() => handleDeleteProject(project.project_id)}
