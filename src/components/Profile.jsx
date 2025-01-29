@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import apiUrl from "../config"
+import apiUrl from "../config";
 
 const Profile = () => {
   const [user, setUser] = useState(null); // State to store user details
@@ -38,7 +38,6 @@ const Profile = () => {
   if (error) {
     return (
       <div className="container mt-5">
-        <h2 className="text-center mb-4">Your Profile</h2>
         <div className="alert alert-danger text-center" role="alert">
           {error}
         </div>
@@ -49,11 +48,8 @@ const Profile = () => {
   if (!user) {
     return (
       <div className="container mt-5">
-        <h2 className="text-center mb-4">Your Profile</h2>
         <div className="text-center">
-          <div className="spinner-border text-primary" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </div>
+          <p>Loading...</p>
         </div>
       </div>
     );
@@ -61,23 +57,25 @@ const Profile = () => {
 
   return (
     <div className="container mt-5">
-      <h2 className="text-center mb-4">Your Profile</h2>
       <div className="row justify-content-center">
-        <div className="col-md-6">
-          <div className="card shadow-sm">
+        <div className="col-md-12">
+          <div className="card shadow-lg border-light">
             <div className="card-header bg-primary text-white text-center">
               <h5>User Information</h5>
             </div>
             <div className="card-body">
               <div className="mb-3">
-                <strong>Name:</strong> {user.name}
+                <strong className="text-muted">Name:</strong> <span>{user.name}</span>
               </div>
               <div className="mb-3">
-                <strong>Email:</strong> {user.email}
+                <strong className="text-muted">Email:</strong> <span>{user.email}</span>
               </div>
               <div className="mb-3">
-                <strong>Role:</strong> {user.role}
+                <strong className="text-muted">Role:</strong> <span>{user.role}</span>
               </div>
+            </div>
+            <div className="card-footer text-center">
+              <button className="btn btn-outline-primary">Edit Profile</button>
             </div>
           </div>
         </div>
