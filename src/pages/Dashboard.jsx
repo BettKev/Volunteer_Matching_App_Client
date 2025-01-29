@@ -148,6 +148,9 @@ const Dashboard = () => {
         <h2>Welcome to Your Dashboard</h2>
         <p>This is your main dashboard area.</p>
 
+        {/* Displaying the user role */}
+        <p className="mt-3">You are logged in as a <strong>{role ? role.charAt(0).toUpperCase() + role.slice(1) : "loading..."}</strong></p>
+
         {/* Project List */}
         <div
           className="row overflow-auto"
