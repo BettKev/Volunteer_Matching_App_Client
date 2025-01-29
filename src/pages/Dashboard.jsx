@@ -1,9 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import apiUrl from "../config"
+import apiUrl from "../config";
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const [projects, setProjects] = useState([]);
+
+  // Fetch the list of projects when the component mounts
+  useEffect(() => {
+    const token = localStorage.getItem("access_token");
+    if (!token) {
+      console.error("No token found. Redirecting to login...");
+      navigate("/login");
+      return;
+    }
+
+    fetch(`${apiUrl}/projects`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setProjects(data.projects); // Assuming the response has a "projects" array
+      })
+      .catch((error) => {
+        console.error("Error fetching projects:", error);
+      });
+  }, [navigate]);
 
   const handleLogout = () => {
     // Get the JWT token from localStorage (or sessionStorage)
@@ -20,7 +46,7 @@ const Dashboard = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`, // Add the token to the Authorization header
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => {
@@ -77,15 +103,29 @@ const Dashboard = () => {
         <h2>Welcome to Your Dashboard</h2>
         <p>This is your main dashboard area. Use this space to display relevant information or widgets.</p>
 
-        {/* Example Cards */}
+        {/* Projects List Card */}
         <div className="row">
           <div className="col-md-12">
             <div className="card shadow-sm">
               <div className="card-body">
-                <h5 className="card-title">Card 1</h5>
-                <a href="#" className="btn btn-primary">
-                  View More
-                </a>
+                <h5 className="card-title">Your Projects</h5>
+                {projects.length > 0 ? (
+  <ul className="list-group">
+    {projects.map((project) => (
+      <li key={project.project_id} className="list-group-item d-flex justify-content-between align-items-center">
+        {project.title}<br></br>
+        {project.description}<br></br>
+        {project.status}
+        <a href={`/projects`} className="btn btn-primary btn-sm">
+          View More
+        </a>
+      </li>
+    ))}
+  </ul>
+) : (
+  <p>No projects available.</p>
+)}
+
               </div>
             </div>
           </div>
