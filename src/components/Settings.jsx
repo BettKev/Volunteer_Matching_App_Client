@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import apiUrl from "../config"
+import apiUrl from "../config";
 
 const Settings = () => {
   const [formData, setFormData] = useState({
@@ -91,14 +91,14 @@ const Settings = () => {
   return (
     <div className="container mt-5">
       <div className="row justify-content-center">
-        <div className="col-md-6">
-          <div className="card shadow">
+        <div className="col-md-12">
+          <div className="card shadow-lg">
             <div className="card-body">
-              <h3 className="card-title text-center mb-4">Settings</h3>
               {message && <div className="alert alert-success">{message}</div>}
               {error && <div className="alert alert-danger">{error}</div>}
+              <h3 className="text-center mb-4">Account Settings</h3>
               <form onSubmit={handleUpdate}>
-                <div className="mb-3">
+                <div className="mb-4">
                   <label htmlFor="name" className="form-label">
                     Name
                   </label>
@@ -112,7 +112,7 @@ const Settings = () => {
                     placeholder="Enter your name"
                   />
                 </div>
-                <div className="mb-3">
+                <div className="mb-4">
                   <label htmlFor="email" className="form-label">
                     Email
                   </label>
@@ -126,7 +126,7 @@ const Settings = () => {
                     placeholder="Enter your email"
                   />
                 </div>
-                <div className="mb-3">
+                <div className="mb-4">
                   <label htmlFor="password" className="form-label">
                     Password
                   </label>
@@ -140,13 +140,13 @@ const Settings = () => {
                     placeholder="Enter a new password"
                   />
                 </div>
-                <div className="d-flex justify-content-between align-items-center">
-                  <button type="submit" className="btn btn-primary">
+                <div className="d-flex justify-content-between">
+                  <button type="submit" className="btn btn-primary w-48">
                     Update
                   </button>
                   <button
                     type="button"
-                    className="btn btn-danger"
+                    className="btn btn-danger w-48"
                     onClick={handleDelete}
                   >
                     Delete Account
