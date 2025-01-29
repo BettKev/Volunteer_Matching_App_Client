@@ -11,29 +11,6 @@ const EditProject = () => {
     status: "",
   });
 
-  useEffect(() => {
-    const token = localStorage.getItem("access_token");
-
-    fetch(`${apiUrl}/projects/${projectId}`, {
-      method: "GET",
-      headers: {
-        "Authorization": `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data) {
-          setProject({
-            title: data.title,
-            description: data.description,
-            status: data.status,
-          });
-        }
-      })
-      .catch((error) => console.error("Error fetching project:", error));
-  }, [projectId]);
-
   const handleChange = (e) => {
     setProject({ ...project, [e.target.name]: e.target.value });
   };

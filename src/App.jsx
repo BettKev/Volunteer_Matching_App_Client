@@ -10,6 +10,7 @@ import Login from "./pages/Login"
 import Dashboard from "./pages/Dashboard";
 import Profile from "./components/Profile";
 import Settings from "./components/Settings";
+import EditProject from "./components/EditProject";
 const App = () => {
   return (
     <Router>
@@ -24,6 +25,7 @@ const App = () => {
           <Route path="/dashboard/*" element={<Dashboard />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/projects/:projectId/edit" element={<EditProject />} />
         </Routes>
       </Layout>
     </Router>
