@@ -65,7 +65,10 @@ const Dashboard = () => {
         <p>This is your main dashboard area.</p>
 
         {/* Project List */}
-        <div className="row">
+        <div
+          className="row overflow-auto"
+          style={{ maxHeight: "calc(150vh - 200px)" }} // Adjust height to allow scroll
+        >
           {projects.length > 0 ? (
             projects.map((project) => (
               <div key={project.project_id} className="col-md-4 mb-3">

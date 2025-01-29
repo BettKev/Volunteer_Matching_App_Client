@@ -56,11 +56,11 @@ const Navbar = () => {
                 Login
               </Link>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link className="nav-link btn btn-primary text-white px-3" to="/dashboard">
                 Dashboard
               </Link>
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>
