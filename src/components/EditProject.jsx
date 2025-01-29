@@ -96,8 +96,9 @@ const EditProject = () => {
               required
             >
               <option value="open">Open</option>
-              <option value="in_progress">In Progress</option>
+              <option value="approved">Approved</option>
               <option value="completed">Completed</option>
+              <option value="pending">Pending</option>
             </select>
           </div>
           <div className="d-flex justify-content-between">
