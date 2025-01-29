@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, Routes, Route } from "react-router-dom";
 import apiUrl from "../config";
+import Profile from "../components/Profile";
+import Settings from "../components/Settings";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -84,44 +86,52 @@ const Dashboard = () => {
             </Link>
           </li>
           <li className="nav-item">
-            <button
-              className="btn btn-danger w-100 mt-3"
-              onClick={handleLogout}
-            >
+            <button className="btn btn-danger w-100 mt-3" onClick={handleLogout}>
               Logout
             </button>
           </li>
         </ul>
       </div>
 
-      {/* Main Content */}
+      {/* Main Content - Conditional Rendering */}
       <div className="d-flex flex-column flex-grow-1 p-4">
-        <h2>Welcome to Your Dashboard</h2>
-        <p>This is your main dashboard area. Use this space to display relevant information or widgets.</p>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <h2>Welcome to Your Dashboard</h2>
+                <p>This is your main dashboard area. Use this space to display relevant information or widgets.</p>
 
-        {/* Scrollable Projects List */}
-        <div className="flex-grow-1 overflow-auto" style={{ maxHeight: "85vh" }}>
-          <div className="row">
-            {projects.length > 0 ? (
-              projects.map((project) => (
-                <div key={project.project_id} className="col-md-4 mb-3">
-                  <div className="card shadow-lg border-0">
-                    <div className="card-body">
-                      <h5 className="card-title">{project.title}</h5>
-                      <p className="card-text">{project.description}</p>
-                      <p className="badge bg-primary">{project.status}</p>
-                      <Link to={`/projects`} className="btn btn-primary w-100 mt-3">
-                        View Project
-                      </Link>
-                    </div>
+                {/* Scrollable Projects List */}
+                <div className="flex-grow-1 overflow-auto" style={{ maxHeight: "85vh" }}>
+                  <div className="row">
+                    {projects.length > 0 ? (
+                      projects.map((project) => (
+                        <div key={project.project_id} className="col-md-4 mb-3">
+                          <div className="card shadow-lg border-0">
+                            <div className="card-body">
+                              <h5 className="card-title">{project.title}</h5>
+                              <p className="card-text">{project.description}</p>
+                              <p className="badge bg-primary">{project.status}</p>
+                              <Link to={`/projects`} className="btn btn-primary w-100 mt-3">
+                                View Project
+                              </Link>
+                            </div>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <p className="text-center">No projects available.</p>
+                    )}
                   </div>
                 </div>
-              ))
-            ) : (
-              <p className="text-center">No projects available.</p>
-            )}
-          </div>
-        </div>
+              </>
+            }
+          />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/settings" element={<Settings />} />
+        </Routes>
       </div>
     </div>
   );
