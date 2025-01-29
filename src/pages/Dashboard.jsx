@@ -9,6 +9,7 @@ const Dashboard = () => {
   const [projects, setProjects] = useState([]);
   const [showProfile, setShowProfile] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [isOrganization, setIsOrganization] = useState(false); // New state to track user role
 
   useEffect(() => {
     const token = localStorage.getItem("access_token");
@@ -18,6 +19,21 @@ const Dashboard = () => {
       return;
     }
 
+    // Fetch user details to determine if user is an organization
+    fetch(`${apiUrl}/details`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setIsOrganization(data.role); // Assuming the API returns this flag
+      })
+      .catch((error) => console.error("Error fetching user details:", error));
+
+    // Fetch projects
     fetch(`${apiUrl}/projects`, {
       method: "GET",
       headers: {
@@ -33,6 +49,34 @@ const Dashboard = () => {
   const handleLogout = () => {
     localStorage.removeItem("access_token");
     navigate("/login");
+  };
+
+  const handleDeleteProject = (projectId) => {
+    if (!window.confirm("Are you sure you want to delete this project? This action cannot be undone.")) {
+      return;
+    }
+
+    const token = localStorage.getItem("access_token");
+    fetch(`${apiUrl}/projects/${projectId}`, {
+      method: "DELETE",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          // Remove the deleted project from the state
+          setProjects(projects.filter(project => project.project_id !== projectId));
+        } else {
+          console.error("Error deleting project:", data.error);
+        }
+      })
+      .catch((error) => console.error("Error deleting project:", error));
+  };
+
+  const handleUpdateProject = (projectId) => {
+    navigate(`/projects/${projectId}/edit`);
   };
 
   return (
@@ -77,9 +121,27 @@ const Dashboard = () => {
                     <h5 className="card-title">{project.title}</h5>
                     <p className="card-text">{project.description}</p>
                     <p className="badge bg-primary">{project.status}</p>
-                    <Link to={`/projects`} className="btn btn-primary w-100 mt-3">
+                    <Link to={`/projects/${project.project_id}`} className="btn btn-primary w-100 mt-3">
                       View Project
                     </Link>
+
+                    {/* Conditional rendering for Update and Delete buttons for organization */}
+                    {isOrganization && (
+                      <div className="mt-3 d-flex justify-content-between">
+                        <button
+                          className="btn btn-warning"
+                          onClick={() => handleUpdateProject(project.project_id)}
+                        >
+                          Update
+                        </button>
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => handleDeleteProject(project.project_id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
