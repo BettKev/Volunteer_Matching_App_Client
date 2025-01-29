@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const apiUrl = "http://localhost:5000/user";
+  const apiUrl = "http://localhost:5000";
 
   const handleLogout = () => {
     // Get the JWT token from localStorage (or sessionStorage)

@@ -3,7 +3,7 @@ import { useNavigate , Link} from "react-router-dom";
 
 const Signup = () => {
   // Variable to hold base api endpoint
-  const apiUrl = "http://localhost:5000/user"
+  const apiUrl = "http://localhost:5000"
   const [formData, setFormData] = useState({
     name: "",
     email: "",
