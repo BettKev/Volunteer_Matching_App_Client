@@ -145,11 +145,12 @@ const Dashboard = () => {
 
       {/* Main Content */}
       <div className="d-flex flex-column flex-grow-1 p-4">
+        <br></br>
+        <br></br>
         <h2>Welcome to Your Dashboard</h2>
-        <p>This is your main dashboard area.</p>
 
         {/* Displaying the user role */}
-        <p className="mt-3">You are logged in as a <strong>{role ? role.charAt(0).toUpperCase() + role.slice(1) : "loading..."}</strong></p>
+        <p className="mt-3">You are logged in as <strong>{role ? role.charAt(0).toUpperCase() + role.slice(1) : "loading..."}</strong></p>
 
         {/* Project List */}
         <div
