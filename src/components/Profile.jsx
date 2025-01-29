@@ -74,9 +74,9 @@ const Profile = () => {
                 <strong className="text-muted">Role:</strong> <span>{user.role}</span>
               </div>
             </div>
-            <div className="card-footer text-center">
+            {/* <div className="card-footer text-center">
               <button className="btn btn-outline-primary">Edit Profile</button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
