@@ -9,7 +9,7 @@ const Dashboard = () => {
   const [projects, setProjects] = useState([]);
   const [showProfile, setShowProfile] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-  const [isOrganization, setIsOrganization] = useState(false); // New state to track user role
+  const [role, setRole] = useState(null); // New state to track user role
 
   useEffect(() => {
     const token = localStorage.getItem("access_token");
@@ -19,7 +19,7 @@ const Dashboard = () => {
       return;
     }
 
-    // Fetch user details to determine if user is an organization
+    // Fetch user details to determine the user role (organization or volunteer)
     fetch(`${apiUrl}/details`, {
       method: "GET",
       headers: {
@@ -29,7 +29,7 @@ const Dashboard = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        setIsOrganization(data.role); // Assuming the API returns this flag
+        setRole(data.role); // Assuming the API returns a "role" field that indicates the role
       })
       .catch((error) => console.error("Error fetching user details:", error));
 
@@ -79,6 +79,46 @@ const Dashboard = () => {
     navigate(`/projects/${projectId}/edit`);
   };
 
+  const handleApplyToProject = (projectId) => {
+    const token = localStorage.getItem("access_token");
+    fetch(`${apiUrl}/projects/${projectId}/apply`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          alert("Successfully applied to the project!");
+        } else {
+          console.error("Error applying to project:", data.error);
+        }
+      })
+      .catch((error) => console.error("Error applying to project:", error));
+  };
+
+  const handleCancelApplication = (projectId) => {
+    const token = localStorage.getItem("access_token");
+    fetch(`${apiUrl}/projects/${projectId}/cancel`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          alert("Successfully canceled the application!");
+        } else {
+          console.error("Error canceling application:", data.error);
+        }
+      })
+      .catch((error) => console.error("Error canceling application:", error));
+  };
+
   return (
     <div className="d-flex vh-100">
       {/* Sidebar */}
@@ -125,8 +165,8 @@ const Dashboard = () => {
                       View Project
                     </Link>
 
-                    {/* Conditional rendering for Update and Delete buttons for organization */}
-                    {isOrganization && (
+                    {/* Conditional rendering based on user role */}
+                    {role === "organization" && (
                       <div className="mt-3 d-flex justify-content-between">
                         <button
                           className="btn btn-warning"
@@ -139,6 +179,23 @@ const Dashboard = () => {
                           onClick={() => handleDeleteProject(project.project_id)}
                         >
                           Delete
+                        </button>
+                      </div>
+                    )}
+
+                    {role === "volunteer" && (
+                      <div className="mt-3 d-flex justify-content-between">
+                        <button
+                          className="btn btn-success"
+                          onClick={() => handleApplyToProject(project.project_id)}
+                        >
+                          Apply
+                        </button>
+                        <button
+                          className="btn btn-warning"
+                          onClick={() => handleCancelApplication(project.project_id)}
+                        >
+                          Cancel
                         </button>
                       </div>
                     )}
