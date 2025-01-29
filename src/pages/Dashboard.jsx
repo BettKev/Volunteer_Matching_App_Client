@@ -7,11 +7,11 @@ import Settings from "../components/Settings";
 const Dashboard = () => {
   const navigate = useNavigate();
   const [projects, setProjects] = useState([]);
+  const [role, setRole] = useState(null);
+  const [filter, setFilter] = useState("all");
   const [showProfile, setShowProfile] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-  const [role, setRole] = useState(null);
-  const [userId, setUserId] = useState(null); // Track logged-in user's ID
-  const [filter, setFilter] = useState("all"); // "all" or "owned"
+  const [userId, setUserId] = useState(null); // store userId
 
   useEffect(() => {
     const token = localStorage.getItem("access_token");
@@ -21,7 +21,7 @@ const Dashboard = () => {
       return;
     }
 
-    // Fetch user details to get role and user ID
+    // Fetch user details to determine the user role
     fetch(`${apiUrl}/details`, {
       method: "GET",
       headers: {
@@ -31,8 +31,8 @@ const Dashboard = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        setRole(data.role);
-        setUserId(data.user_id); // Assuming API returns "user_id"
+        setRole(data.role); // Assuming the API returns a "role" field that indicates the role
+        setUserId(data.user_id); // Assuming the API returns a "userId" field
       })
       .catch((error) => console.error("Error fetching user details:", error));
 
@@ -49,10 +49,88 @@ const Dashboard = () => {
       .catch((error) => console.error("Error fetching projects:", error));
   }, [navigate]);
 
-  // Filter projects based on selection
-  const filteredProjects = filter === "owned"
-    ? projects.filter(project => project.organization_id === userId) // Assuming API returns organization_id
-    : projects;
+  const filteredProjects =
+    filter === "owned"
+      ? projects.filter((project) => project.organization_id === userId) // Assuming userId is defined elsewhere, if not just filter based on project status
+      : projects;
+
+  const handleLogout = () => {
+    localStorage.removeItem("access_token");
+    navigate("/login");
+  };
+
+  const handleDeleteProject = async (projectId) => {
+    if (!window.confirm("Are you sure you want to delete this project? This action cannot be undone.")) {
+      return;
+    }
+
+    const token = localStorage.getItem("access_token");
+
+    try {
+      const response = await fetch(`${apiUrl}/projects/${projectId}`, {
+        method: "DELETE",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        alert("Project deleted successfully!");
+        setProjects((prevProjects) => prevProjects.filter(project => project.project_id !== projectId));
+      } else {
+        alert(`Error: ${data.message}`);
+      }
+    } catch (error) {
+      console.error("Error deleting project:", error);
+      alert("An error occurred while deleting the project.");
+    }
+  };
+
+  const handleUpdateProject = (projectId) => {
+    navigate(`/projects/${projectId}/edit`);
+  };
+
+  const handleApplyToProject = (projectId) => {
+    const token = localStorage.getItem("access_token");
+    fetch(`${apiUrl}/projects/${projectId}/apply`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          alert("Successfully applied to the project!");
+        } else {
+          console.error("Error applying to project:", data.error);
+        }
+      })
+      .catch((error) => console.error("Error applying to project:", error));
+  };
+
+  const handleCancelApplication = (projectId) => {
+    const token = localStorage.getItem("access_token");
+    fetch(`${apiUrl}/projects/${projectId}/cancel`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          alert("Successfully canceled the application!");
+        } else {
+          console.error("Error canceling application:", data.error);
+        }
+      })
+      .catch((error) => console.error("Error canceling application:", error));
+  };
 
   return (
     <div className="d-flex vh-100">
@@ -71,7 +149,7 @@ const Dashboard = () => {
             </button>
           </li>
           <li className="nav-item">
-            <button className="btn btn-danger w-100 mt-3" onClick={() => localStorage.removeItem("access_token") || navigate("/login")}>
+            <button className="btn btn-danger w-100 mt-3" onClick={handleLogout}>
               Logout
             </button>
           </li>
@@ -81,13 +159,18 @@ const Dashboard = () => {
       {/* Main Content */}
       <div className="d-flex flex-column flex-grow-1 p-4">
         <h2>Welcome to Your Dashboard</h2>
-
         <p className="mt-3">You are logged in as <strong>{role ? role.charAt(0).toUpperCase() + role.slice(1) : "loading..."}</strong></p>
 
-        {/* Filter Toggle */}
+        {/* Filter Projects */}
         {role === "organization" && (
-          <div className="d-flex justify-content-end mb-3">
-            <select className="form-select w-auto" value={filter} onChange={(e) => setFilter(e.target.value)}>
+          <div className="mb-3">
+            <label htmlFor="projectFilter">Filter Projects:</label>
+            <select
+              id="projectFilter"
+              className="form-select"
+              value={filter}
+              onChange={(e) => setFilter(e.target.value)}
+            >
               <option value="all">All Projects</option>
               <option value="owned">My Projects</option>
             </select>
@@ -107,26 +190,31 @@ const Dashboard = () => {
                     <Link to={`/projects/${project.project_id}`} className="btn btn-primary w-100 mt-3">
                       View Project
                     </Link>
-
-                    {/* Organization Controls */}
                     {role === "organization" && (
                       <div className="mt-3 d-flex justify-content-between">
-                        <button className="btn btn-warning" onClick={() => navigate(`/projects/${project.project_id}/edit`)}>
+                        <button className="btn btn-warning" onClick={() => handleUpdateProject(project.project_id)}>
                           Update
                         </button>
-                        <button className="btn btn-danger" onClick={() => handleDeleteProject(project.project_id)}>
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => handleDeleteProject(project.project_id)}
+                        >
                           Delete
                         </button>
                       </div>
                     )}
-
-                    {/* Volunteer Controls */}
                     {role === "volunteer" && (
                       <div className="mt-3 d-flex justify-content-between">
-                        <button className="btn btn-success" onClick={() => handleApplyToProject(project.project_id)}>
+                        <button
+                          className="btn btn-success"
+                          onClick={() => handleApplyToProject(project.project_id)}
+                        >
                           Apply
                         </button>
-                        <button className="btn btn-warning" onClick={() => handleCancelApplication(project.project_id)}>
+                        <button
+                          className="btn btn-warning"
+                          onClick={() => handleCancelApplication(project.project_id)}
+                        >
                           Cancel
                         </button>
                       </div>
@@ -140,6 +228,43 @@ const Dashboard = () => {
           )}
         </div>
       </div>
+
+      {/* Profile Modal */}
+      {showProfile && (
+        <div className="modal fade show d-block" tabIndex="-1">
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Profile</h5>
+                <button type="button" className="btn-close" onClick={() => setShowProfile(false)}></button>
+              </div>
+              <div className="modal-body">
+                <Profile />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Settings Modal */}
+      {showSettings && (
+        <div className="modal fade show d-block" tabIndex="-1">
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Settings</h5>
+                <button type="button" className="btn-close" onClick={() => setShowSettings(false)}></button>
+              </div>
+              <div className="modal-body">
+                <Settings />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Backdrop (for better UI experience) */}
+      {(showProfile || showSettings) && <div className="modal-backdrop fade show"></div>}
     </div>
   );
 };
