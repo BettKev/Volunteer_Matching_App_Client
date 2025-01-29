@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import apiUrl from "../config"
 
 const Settings = () => {
   const [formData, setFormData] = useState({
@@ -8,8 +9,6 @@ const Settings = () => {
   });
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
-
-  const apiUrl = "http://localhost:5000";
 
   // Handle form input changes
   const handleInputChange = (e) => {

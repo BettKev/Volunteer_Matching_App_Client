@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate , Link} from "react-router-dom";
+import apiUrl from "../config"
 
 const Signup = () => {
   // Variable to hold base api endpoint
-  const apiUrl = "http://localhost:5000"
   const [formData, setFormData] = useState({
     name: "",
     email: "",

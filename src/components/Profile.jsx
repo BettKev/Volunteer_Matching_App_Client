@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
+import apiUrl from "../config"
 
 const Profile = () => {
   const [user, setUser] = useState(null); // State to store user details
   const [error, setError] = useState(null); // State to store errors, if any
-  const apiUrl = "http://localhost:5000"; // Replace with your actual API endpoint
 
   useEffect(() => {
     const fetchUser = async () => {
