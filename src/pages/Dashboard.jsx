@@ -12,6 +12,7 @@ const Dashboard = () => {
   const [showProfile, setShowProfile] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [userId, setUserId] = useState(null); // store userId
+  const [appliedProjects, setAppliedProjects] = useState([]); // Store applied projects for volunteers
 
   useEffect(() => {
     const token = localStorage.getItem("access_token");
@@ -45,13 +46,41 @@ const Dashboard = () => {
       },
     })
       .then((response) => response.json())
-      .then((data) => setProjects(data.projects))
+      .then((data) => {
+        setProjects(data.projects || []); // Ensure an empty array if no projects found
+      })
       .catch((error) => console.error("Error fetching projects:", error));
+
+    // Fetch applied projects for volunteers
+    fetch(`${apiUrl}/user/applications`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          setAppliedProjects(data.data || []); // Set applied projects data
+        } else {
+          console.error("Error fetching applied projects:", data.message);
+        }
+      })
+      .catch((error) => console.error("Error fetching applied projects:", error));
+
   }, [navigate]);
 
+  // Filtered projects logic based on the user's role and filter
   const filteredProjects =
-    filter === "owned"
-      ? projects.filter((project) => project.organization_id === userId) // Assuming userId is defined elsewhere, if not just filter based on project status
+    role === "organization"
+      ? filter === "owned"
+        ? projects.filter((project) => project.organization_id === userId)
+        : projects
+      : filter === "applied"
+      ? projects.filter((project) =>
+          (appliedProjects || []).some((app) => app.project_id === project.project_id)
+        )
       : projects;
 
   const handleLogout = () => {
@@ -158,25 +187,27 @@ const Dashboard = () => {
 
       {/* Main Content */}
       <div className="d-flex flex-column flex-grow-1 p-4 bg-primary text-white">
-
         <h2>Welcome to Your Dashboard</h2>
         <p className="mt-3">You are logged in as <strong>{role ? role.charAt(0).toUpperCase() + role.slice(1) : "loading..."}</strong></p>
 
-        {/* Filter Projects */}
-        {role === "organization" && (
+        {/* Filter Projects for Organization & Volunteer */}
+        {(role === "organization" || role === "volunteer") && (
           <div className="mb-3">
             <label htmlFor="projectFilter">Filter Projects:</label>
             <select
-            id="projectFilter"
-            className="form-select"
-            style={{ width: "200px" }}
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
-          >
-            <option value="all">All Projects</option>
-            <option value="owned">My Projects</option>
-          </select>
-
+              id="projectFilter"
+              className="form-select"
+              style={{ width: "200px" }}
+              value={filter}
+              onChange={(e) => setFilter(e.target.value)}
+            >
+              <option value="all">All Projects</option>
+              {role === "organization" ? (
+                <option value="owned">My Projects</option>
+              ) : (
+                <option value="applied">Applied Projects</option>
+              )}
+            </select>
           </div>
         )}
 
@@ -190,9 +221,6 @@ const Dashboard = () => {
                     <h5 className="card-title">{project.title}</h5>
                     <p className="card-text">{project.description}</p>
                     <p className="badge bg-primary">{project.status}</p>
-                    {/* <Link to={`/projects/${project.project_id}`} className="btn btn-primary w-100 mt-3">
-                      View Project
-                    </Link> */}
                     {role === "organization" && (
                       <div className="mt-3 d-flex justify-content-between">
                         <button className="btn btn-warning" onClick={() => handleUpdateProject(project.project_id)}>
@@ -266,7 +294,7 @@ const Dashboard = () => {
         </div>
       )}
 
-      {/* Backdrop (for better UI experience)  */}
+      {/* Backdrop (for better UI experience) */}
       {(showProfile || showSettings) && <div className="modal-backdrop fade show"></div>}
     </div>
   );
