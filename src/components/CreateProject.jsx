@@ -42,33 +42,39 @@ const ProjectForm = () => {
   };
 
   return (
-    <div>
+    <div className="container mt-4">
       <h2>Create a New Project</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="title">Project Title:</label>
+      <form onSubmit={handleSubmit} className="mt-4">
+        <div className="mb-3">
+          <label htmlFor="title" className="form-label">Project Title:</label>
           <input
             type="text"
             id="title"
+            className="form-control"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
           />
         </div>
-        <div>
-          <label htmlFor="description">Project Description:</label>
+        <div className="mb-3">
+          <label htmlFor="description" className="form-label">Project Description:</label>
           <textarea
             id="description"
+            className="form-control"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required
           />
         </div>
-        <button type="submit" disabled={loading}>
+        <button type="submit" className="btn btn-primary w-100" disabled={loading}>
           {loading ? "Creating..." : "Create Project"}
         </button>
       </form>
-      {message && <p>{message}</p>}
+      {message && (
+        <div className={`alert ${message.includes("success") ? "alert-success" : "alert-danger"} mt-3`}>
+          {message}
+        </div>
+      )}
     </div>
   );
 };
