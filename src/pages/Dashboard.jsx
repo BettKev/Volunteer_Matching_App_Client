@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import apiUrl from "../config";
 import Profile from "../components/Profile";
 import Settings from "../components/Settings";
+import CreateProject from "../components/CreateProject";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -11,8 +12,11 @@ const Dashboard = () => {
   const [filter, setFilter] = useState("all");
   const [showProfile, setShowProfile] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [showCreateProject, setShowCreateProject] = useState(false);
   const [userId, setUserId] = useState(null); // store userId
   const [appliedProjects, setAppliedProjects] = useState([]); // Store applied projects for volunteers
+  
+
 
   useEffect(() => {
     const token = localStorage.getItem("access_token");
@@ -194,9 +198,10 @@ const Dashboard = () => {
 
         {role === "organization" && (
                       <div className="mt-3 d-flex justify-content-between">
-                      <button className="btn btn-success mb-3" onClick={() => navigate("/projects/create")}>
-  Create New Project
-</button>
+                      <button className="btn btn-success mb-3" onClick={() => setShowCreateProject(true)}>
+                        Create New Project
+                      </button>
+                      
                       </div>
                     )}
 
@@ -304,8 +309,25 @@ const Dashboard = () => {
         </div>
       )}
 
+            {/* Create Project Modal */}
+            {showCreateProject && (
+        <div className="modal fade show d-block" tabIndex="-1">
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Create Project</h5>
+                <button type="button" className="btn-close" onClick={() => setShowCreateProject(false)}></button>
+              </div>
+              <div className="modal-body">
+                <CreateProject />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Backdrop (for better UI experience) */}
-      {(showProfile || showSettings) && <div className="modal-backdrop fade show"></div>}
+      {(showProfile || showSettings || showCreateProject) && <div className="modal-backdrop fade show"></div>}
     </div>
   );
 };
