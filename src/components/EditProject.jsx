@@ -10,9 +10,9 @@ const EditProject = () => {
     description: "",
     status: "",
   });
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    // Fetch project data to pre-fill the form
     const token = localStorage.getItem("access_token");
     fetch(`${apiUrl}/projects/${projectId}`, {
       method: "GET",
@@ -20,15 +20,27 @@ const EditProject = () => {
         Authorization: `Bearer ${token}`,
       },
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.status === 403) {
+          throw new Error("Unauthorized: Only organizations can update their projects.");
+        }
+        if (response.status === 404) {
+          throw new Error("You can only update My projects");
+        }
+        return response.json();
+      })
       .then((data) => {
         setProject({
           title: data.title || "",
           description: data.description || "",
           status: data.status || "open",
         });
+        setError(""); // Clear any previous error
       })
-      .catch((error) => console.error("Error fetching project:", error));
+      .catch((error) => {
+        console.error("Error fetching project:", error);
+        setError(error.message);
+      });
   }, [projectId]);
 
   const handleChange = (e) => {
@@ -50,19 +62,22 @@ const EditProject = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data.message === "Project updated successfully") {
-          alert("Project updated successfully!");
           navigate("/dashboard");
         } else {
-          alert("Error updating project: " + data.message);
+          setError("Error updating project: " + data.message);
         }
       })
-      .catch((error) => console.error("Error updating project:", error));
+      .catch((error) => {
+        console.error("Error updating project:", error);
+        setError("An error occurred while updating the project.");
+      });
   };
 
   return (
     <div className="container d-flex justify-content-center align-items-center min-vh-100">
       <div className="card shadow-lg p-4 rounded" style={{ width: "50%" }}>
         <h2 className="text-center mb-4">Edit Project</h2>
+        {error && <div className="alert alert-danger text-center">{error}</div>}
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label className="form-label fw-bold">Title</label>
