@@ -9,6 +9,7 @@ const Footer = () => {
       <div>
         <a href="https://volunteer-matching-app-server.onrender.com/" target="_blank">Api Documentation</a>
       </div>
+      <button> <a href="https://4645p5y1.status.cron-job.org/" target="_blank">Status page</a></button>
     </footer>
   );
 };
