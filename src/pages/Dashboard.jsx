@@ -73,15 +73,16 @@ const Dashboard = () => {
 
   // Filtered projects logic based on the user's role and filter
   const filteredProjects =
-    role === "organization"
-      ? filter === "owned"
-        ? projects.filter((project) => project.organization_id === userId)
-        : projects
-      : filter === "applied"
-      ? projects.filter((project) =>
-          (appliedProjects || []).some((app) => app.project_id === project.project_id)
-        )
-      : projects;
+  role === "organization"
+    ? filter === "owned"
+      ? projects.filter((project) => project.organization_id === userId) // Filter owned projects by organization_id
+      : projects
+    : filter === "applied"
+    ? projects.filter((project) =>
+        (appliedProjects || []).some((app) => app.project_id === project.project_id)
+      )
+    : projects;
+
 
   const handleLogout = () => {
     localStorage.removeItem("access_token");
