@@ -31,8 +31,8 @@ const Dashboard = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        setRole(data.role); // Assuming the API returns a "role" field that indicates the role
-        setUserId(data.user_id); // Assuming the API returns a "userId" field
+        setRole(data.role); // API returns a "role" field that indicates the role
+        setUserId(data.user_id); // API returns a "userId" field
       })
       .catch((error) => console.error("Error fetching user details:", error));
 
@@ -157,7 +157,8 @@ const Dashboard = () => {
       </div>
 
       {/* Main Content */}
-      <div className="d-flex flex-column flex-grow-1 p-4">
+      <div className="d-flex flex-column flex-grow-1 p-4 bg-primary text-white">
+
         <h2>Welcome to Your Dashboard</h2>
         <p className="mt-3">You are logged in as <strong>{role ? role.charAt(0).toUpperCase() + role.slice(1) : "loading..."}</strong></p>
 
@@ -166,30 +167,32 @@ const Dashboard = () => {
           <div className="mb-3">
             <label htmlFor="projectFilter">Filter Projects:</label>
             <select
-              id="projectFilter"
-              className="form-select"
-              value={filter}
-              onChange={(e) => setFilter(e.target.value)}
-            >
-              <option value="all">All Projects</option>
-              <option value="owned">My Projects</option>
-            </select>
+            id="projectFilter"
+            className="form-select"
+            style={{ width: "200px" }}
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+          >
+            <option value="all">All Projects</option>
+            <option value="owned">My Projects</option>
+          </select>
+
           </div>
         )}
 
         {/* Project List */}
-        <div className="row overflow-auto" style={{ maxHeight: "calc(150vh - 200px)" }}>
+        <div className="row overflow-auto " style={{ maxHeight: "calc(150vh - 200px)" }}>
           {filteredProjects.length > 0 ? (
             filteredProjects.map((project) => (
               <div key={project.project_id} className="col-md-4 mb-3">
-                <div className="card shadow-lg border-0">
+                <div className="card shadow-lg border-0 bg-dark text-white">
                   <div className="card-body">
                     <h5 className="card-title">{project.title}</h5>
                     <p className="card-text">{project.description}</p>
                     <p className="badge bg-primary">{project.status}</p>
-                    <Link to={`/projects/${project.project_id}`} className="btn btn-primary w-100 mt-3">
+                    {/* <Link to={`/projects/${project.project_id}`} className="btn btn-primary w-100 mt-3">
                       View Project
-                    </Link>
+                    </Link> */}
                     {role === "organization" && (
                       <div className="mt-3 d-flex justify-content-between">
                         <button className="btn btn-warning" onClick={() => handleUpdateProject(project.project_id)}>
@@ -263,7 +266,7 @@ const Dashboard = () => {
         </div>
       )}
 
-      {/* Backdrop (for better UI experience) */}
+      {/* Backdrop (for better UI experience)  */}
       {(showProfile || showSettings) && <div className="modal-backdrop fade show"></div>}
     </div>
   );
