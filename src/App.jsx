@@ -11,6 +11,7 @@ import Dashboard from "./pages/Dashboard";
 import Profile from "./components/Profile";
 import Settings from "./components/Settings";
 import EditProject from "./components/EditProject";
+import CreateProjectModal from "./components/CreateProject";
 const App = () => {
   return (
     <Router>
@@ -26,6 +27,7 @@ const App = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/projects/:projectId/edit" element={<EditProject />} />
+          <Route path="/projects/create" element={<CreateProjectModal />} />
         </Routes>
       </Layout>
     </Router>

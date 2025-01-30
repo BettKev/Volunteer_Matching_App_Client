@@ -75,13 +75,14 @@ const Dashboard = () => {
   const filteredProjects =
   role === "organization"
     ? filter === "owned"
-      ? projects.filter((project) => project.organization_id === userId) // Filter owned projects by organization_id
+      ? projects.filter((project) => String(project.organization_id) === String(userId)) // Ensure correct comparison
       : projects
     : filter === "applied"
     ? projects.filter((project) =>
         (appliedProjects || []).some((app) => app.project_id === project.project_id)
       )
     : projects;
+
 
 
   const handleLogout = () => {
@@ -190,6 +191,14 @@ const Dashboard = () => {
       <div className="d-flex flex-column flex-grow-1 p-4 bg-primary text-white">
         <h2>Welcome to Your Dashboard</h2>
         <p className="mt-3">You are logged in as <strong>{role ? role.charAt(0).toUpperCase() + role.slice(1) : "loading..."}</strong></p>
+
+        {role === "organization" && (
+                      <div className="mt-3 d-flex justify-content-between">
+                      <button className="btn btn-success mb-3" onClick={() => navigate("/projects/create")}>
+  Create New Project
+</button>
+                      </div>
+                    )}
 
         {/* Filter Projects for Organization & Volunteer */}
         {(role === "organization" || role === "volunteer") && (
