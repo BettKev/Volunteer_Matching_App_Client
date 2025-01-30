@@ -232,40 +232,48 @@ const Dashboard = () => {
             filteredProjects.map((project) => (
               <div key={project.project_id} className="col-md-4 mb-3">
                 <div className="card shadow-lg border-0 bg-dark text-white">
-                  <div className="card-body">
-                    <h5 className="card-title">{project.title}</h5>
-                    <p className="card-text">{project.description}</p>
-                    <p className="badge bg-primary">{project.status}</p>
-                    {role === "organization" && (
-                      <div className="mt-3 d-flex justify-content-between">
-                        <button className="btn btn-warning" onClick={() => handleUpdateProject(project.project_id)}>
-                          Update
-                        </button>
-                        <button
-                          className="btn btn-danger"
-                          onClick={() => handleDeleteProject(project.project_id)}
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    )}
-                    {role === "volunteer" && (
-                      <div className="mt-3 d-flex justify-content-between">
-                        <button
-                          className="btn btn-success"
-                          onClick={() => handleApplyToProject(project.project_id)}
-                        >
-                          Apply
-                        </button>
-                        <button
-                          className="btn btn-warning"
-                          onClick={() => handleCancelApplication(project.project_id)}
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    )}
-                  </div>
+                <div className="card-body">
+  <h5 className="card-title">{project.title}</h5>
+  <p className="card-text">{project.description}</p>
+  <p className="badge bg-primary">{project.status}</p>
+  {role === "organization" && (
+    <div className="mt-3 d-flex justify-content-between">
+      <button className="btn btn-warning" onClick={() => handleUpdateProject(project.project_id)}>
+        Update
+      </button>
+      <button
+        className="btn btn-danger"
+        onClick={() => handleDeleteProject(project.project_id)}
+      >
+        Delete
+      </button>
+    </div>
+  )}
+  {role === "volunteer" && (
+    <div className="mt-3 d-flex justify-content-between">
+      {/* Conditionally render the Apply button text */}
+      <button
+        className="btn btn-success"
+        onClick={() => handleApplyToProject(project.project_id)}
+        disabled={appliedProjects.some(app => app.project_id === project.project_id)} // Disable if already applied
+      >
+        {appliedProjects.some(app => app.project_id === project.project_id)
+          ? "Already Applied"
+          : "Apply"
+        }
+      </button>
+      {appliedProjects.some(app => app.project_id === project.project_id) && (
+        <button
+          className="btn btn-warning"
+          onClick={() => handleCancelApplication(project.project_id)}
+        >
+          Cancel Application
+        </button>
+      )}
+    </div>
+  )}
+</div>
+
                 </div>
               </div>
             ))
