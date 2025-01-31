@@ -150,7 +150,7 @@ const Dashboard = () => {
   const handleCancelApplication = (projectId) => {
     const token = localStorage.getItem("access_token");
     fetch(`${apiUrl}/projects/${projectId}/cancel`, {
-      method: "POST",
+      method: "DELETE",
       headers: {
         "Authorization": `Bearer ${token}`,
         "Content-Type": "application/json",
