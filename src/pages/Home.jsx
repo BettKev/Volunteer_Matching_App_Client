@@ -1,6 +1,6 @@
 import React from "react";
 import AboutUsImage from "../assets/helpneeded_large.png"; // Adjust the path based on your folder structure
-
+import { Link } from "react-router-dom";
 const Home = () => {
   return (
     <div className="container mt-5">
@@ -11,12 +11,12 @@ const Home = () => {
           Discover opportunities, connect with others, and make a difference.
         </p>
         <div className="mt-4">
-          <a href="/signup" className="btn btn-primary btn-lg me-3">
-            Get Started
-          </a>
-          <a href="/about" className="btn btn-outline-secondary btn-lg">
-            Learn More
-          </a>
+        <Link className="btn btn-outline-secondary btn-lg btn-bg-blue" to="/signup">
+                Get Started!
+              </Link>
+              <Link className="btn btn-outline-secondary btn-lg" to="/about">
+                Learn More!
+              </Link>
         </div>
       </div>
 
