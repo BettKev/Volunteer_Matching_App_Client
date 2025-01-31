@@ -87,6 +87,7 @@ Ensure you have the following installed on your system:
     - Get started call to action bug not loading sign up page use login and sign up link on navbar
 
 ## Resources
+
     Frontend
 - [Deployed Frontend](https://volunteer-liard.vercel.app/)
 
