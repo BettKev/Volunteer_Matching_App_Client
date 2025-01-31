@@ -1,57 +1,55 @@
-# Volunteer Matching App Client
+# Volunteer Matching App - Client
 
-This project sets up a basic Flask server with the following dependencies:
-- `React`
-- `Bootstrap`
+This repository contains the frontend for the Volunteer Matching App, built using React and Bootstrap.
 
 ## Prerequisites
 
-Ensure you have the following installed on your system:
-- React+Vite
-- Bootstrap
-- A code editor (e.g., Visual Studio Code)
-
----
+Ensure you have the following installed:
+- **Node.js & npm** (latest LTS recommended)
+- **React + Vite**
+- **Bootstrap**
+- **A code editor** (e.g., Visual Studio Code)
 
 ## Project Structure
 
 ```
-    bettkev-volunteer_matching_app_client/
-    ├── README.md
-    ├── eslint.config.js
-    ├── index.html
-    ├── package.json
-    ├── vite.config.js
-    ├── public/
-    └── src/
-        ├── App.jsx
-        ├── config.js
-        ├── index.css
-        ├── main.jsx
-        ├── assets/
-        ├── components/
-        │   ├── CreateProject.jsx
-        │   ├── EditProject.jsx
-        │   ├── Footer.jsx
-        │   ├── Layout.jsx
-        │   ├── Navbar.jsx
-        │   ├── Profile.jsx
-        │   ├── Settings.jsx
-        │   └── User_dash.jsx
-        └── pages/
-            ├── About.jsx
-            ├── Contact.jsx
-            ├── Dashboard.jsx
-            ├── Home.jsx
-            ├── Login.jsx
-            ├── Services.jsx
-            └── Sign_up.jsx
+volunteer_matching_app_client/
+├── README.md
+├── eslint.config.js
+├── index.html
+├── package.json
+├── vite.config.js
+├── public/
+└── src/
+    ├── App.jsx
+    ├── config.js
+    ├── index.css
+    ├── main.jsx
+    ├── assets/
+    ├── components/
+    │   ├── CreateProject.jsx
+    │   ├── EditProject.jsx
+    │   ├── Footer.jsx
+    │   ├── Layout.jsx
+    │   ├── Navbar.jsx
+    │   ├── Profile.jsx
+    │   ├── Settings.jsx
+    │   └── UserDash.jsx
+    └── pages/
+        ├── About.jsx
+        ├── Contact.jsx
+        ├── Dashboard.jsx
+        ├── Home.jsx
+        ├── Login.jsx
+        ├── Services.jsx
+        └── SignUp.jsx
 ```
----
 
 ## Setup Instructions
 
-1. **Navigate to the `server` Directory**
+Follow these steps to set up the frontend application:
+
+1. **Navigate to the Project Directory**
 
    ```bash
    cd project/client
@@ -59,37 +57,39 @@ Ensure you have the following installed on your system:
 
 2. **Install Dependencies**
 
-   Use `npm install` to install the required React packages:
+   Run the following command to install all necessary dependencies:
 
    ```bash
    npm install
    ```
 
-3. **Run the Application**
+3. **Start the Application**
 
-   Ensure you're in the client directory and run the React app:
+   Run the following command to start the development server:
 
    ```bash
    npm run dev
    ```
 
-4. **Access the Server**
+4. **Access the Application**
 
-   Open your browser and navigate to:
+   Open your browser and go to:
+   
    ```
    http://localhost:3000/
    ```
----
 
-5. **Bug report**
+## Known Issues & Bug Reports
 
-    - Reload project list bug when user volunteer cancels/applies for application. Ensure to refresh the page to update the changes on the React DOM
-    - Get started call to action bug not loading sign up page use login and sign up link on navbar
+- **Project List Refresh Issue**: When a user applies or cancels a volunteer application, the project list does not update automatically. A page refresh is required to reflect the changes.
+
 
 ## Resources
 
-- [Deployed Frontend](https://volunteer-liard.vercel.app/)
+- **Deployed Frontend**: [Volunteer Matching App - Frontend](https://volunteer-liard.vercel.app/)
+- **Deployed Backend**: [Volunteer Matching App - Backend](https://volunteer-matching-app-server.onrender.com/)
+- **Demo Video**: [YouTube Video Demo](https://youtu.be/fqeVZi8tRKk)
 
-- [Deployed Backend](https://volunteer-matching-app-server.onrender.com/)
+---
 
-- [Youtube Video Demo](https://youtu.be/fqeVZi8tRKk)
+For any issues or contributions, feel free to submit a pull request or open an issue.
