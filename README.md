@@ -88,11 +88,8 @@ Ensure you have the following installed on your system:
 
 ## Resources
 
-    Frontend
 - [Deployed Frontend](https://volunteer-liard.vercel.app/)
 
-    Backend
 - [Deployed Backend](https://volunteer-matching-app-server.onrender.com/)
 
-    Youtube Video Demo
-- [Video Demo](https://youtu.be/fqeVZi8tRKk)
+- [Youtube Video Demo](https://youtu.be/fqeVZi8tRKk)
