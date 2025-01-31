@@ -7,7 +7,7 @@ const Navbar = () => {
       <div className="container-fluid">
         {/* Brand/Logo */}
         <Link className="navbar-brand" to="/">
-          MyApp
+          Volunteer Matching App
         </Link>
 
         {/* Toggle button for mobile view */}
@@ -46,7 +46,7 @@ const Navbar = () => {
                 Contact
               </Link>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link className="nav-link" to="/signup">
                 Sign Up
               </Link>
@@ -55,7 +55,7 @@ const Navbar = () => {
               <Link className="nav-link" to="/login">
                 Login
               </Link>
-            </li>
+            </li> */}
             {/* <li className="nav-item">
               <Link className="nav-link btn btn-primary text-white px-3" to="/dashboard">
                 Dashboard
