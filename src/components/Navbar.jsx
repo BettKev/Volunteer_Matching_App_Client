@@ -10,17 +10,6 @@ const Navbar = () => {
     setIsLoggedIn(!!token); // Convert token existence to boolean
   }, []);
 
-  // Function to handle login or logout manually from other components
-  const handleLogin = () => {
-    localStorage.setItem("access_token", "your_token_here");
-    setIsLoggedIn(true);
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("access_token");
-    setIsLoggedIn(false);
-  };
-
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div className="container-fluid">
@@ -70,14 +59,6 @@ const Navbar = () => {
                 <Link className="nav-link btn btn-primary text-white px-3" to="/dashboard">
                   Dashboard
                 </Link>
-              </li>
-            )}
-            {/* Example logout button */}
-            {isLoggedIn && (
-              <li className="nav-item">
-                <button className="nav-link btn btn-danger text-white px-3" onClick={handleLogout}>
-                  Logout
-                </button>
               </li>
             )}
           </ul>
