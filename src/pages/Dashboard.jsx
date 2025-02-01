@@ -15,8 +15,8 @@ const Dashboard = () => {
   const [showCreateProject, setShowCreateProject] = useState(false);
   const [userId, setUserId] = useState(null); // store userId
   const [appliedProjects, setAppliedProjects] = useState([]); // Store applied projects for volunteers
-  
 
+  
 
   useEffect(() => {
     const token = localStorage.getItem("access_token");
@@ -171,6 +171,11 @@ const Dashboard = () => {
         }
       })
       .catch((error) => console.error("Error canceling application:", error));
+  };
+
+  const handleProjectCreated = () => {
+    setShowCreateProject(false); // Close the modal
+    fetchProjects(); // Refresh the project list
   };
 
   return (
@@ -333,7 +338,8 @@ const Dashboard = () => {
                 <button type="button" className="btn-close" onClick={() => setShowCreateProject(false)}></button>
               </div>
               <div className="modal-body">
-                <CreateProject />
+                <CreateProject onProjectCreated={handleProjectCreated} />
+
               </div>
             </div>
           </div>
@@ -347,3 +353,4 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import apiUrl from "../config";
 
-const ProjectForm = () => {
+const ProjectForm = ({onProjectCreated}) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [message, setMessage] = useState("");
@@ -31,6 +31,8 @@ const ProjectForm = () => {
 
       if (response.ok) {
         setMessage(`Project created successfully! Project ID: ${data.project_id}`);
+        // Call the callback function to refresh the project list
+        onProjectCreated();
       } else {
         setMessage(`Error: ${data.message}`);
       }
