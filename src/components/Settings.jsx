@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import apiUrl from "../config";
+import { useNavigate, Link } from "react-router-dom";
 
 const Settings = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -81,7 +83,7 @@ const Settings = () => {
       setError("");
 
       // Redirect to login page after account deletion
-      window.location.href = "/login";
+      navigate("/login");
     } catch (err) {
       setError(err.message);
       setMessage("");
