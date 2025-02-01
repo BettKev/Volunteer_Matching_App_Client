@@ -1,5 +1,5 @@
 import React from "react";
-import AboutUsImage from "../assets/helpneeded_large.png"; // Adjust the path based on your folder structure
+import helpneeded from "../assets/helpneeded_large.png"; // Adjust the path based on your folder structure
 import { Link } from "react-router-dom";
 const Home = () => {
   return (
@@ -24,7 +24,7 @@ const Home = () => {
       <div className="row mt-5">
         <div className="col-md-6">
           <img
-            src={AboutUsImage}
+            src={helpneeded}
             alt="About Us"
             className="img-fluid rounded shadow"
           />

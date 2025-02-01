@@ -1,7 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // Check login status on initial load
+    const token = localStorage.getItem("access_token");
+    setIsLoggedIn(!!token); // Convert token existence to boolean
+  }, []);
+
+  // Function to handle login or logout manually from other components
+  const handleLogin = () => {
+    localStorage.setItem("access_token", "your_token_here");
+    setIsLoggedIn(true);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("access_token");
+    setIsLoggedIn(false);
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div className="container-fluid">
@@ -46,21 +65,21 @@ const Navbar = () => {
                 Contact
               </Link>
             </li>
-            {/* <li className="nav-item">
-              <Link className="nav-link" to="/signup">
-                Sign Up
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/login">
-                Login
-              </Link>
-            </li> */}
-            {/* <li className="nav-item">
-              <Link className="nav-link btn btn-primary text-white px-3" to="/dashboard">
-                Dashboard
-              </Link>
-            </li> */}
+            {isLoggedIn && (
+              <li className="nav-item">
+                <Link className="nav-link btn btn-primary text-white px-3" to="/dashboard">
+                  Dashboard
+                </Link>
+              </li>
+            )}
+            {/* Example logout button */}
+            {isLoggedIn && (
+              <li className="nav-item">
+                <button className="nav-link btn btn-danger text-white px-3" onClick={handleLogout}>
+                  Logout
+                </button>
+              </li>
+            )}
           </ul>
         </div>
       </div>

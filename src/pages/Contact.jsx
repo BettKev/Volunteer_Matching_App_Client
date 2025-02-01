@@ -1,4 +1,5 @@
 import React from "react";
+import v1 from "../assets/v1.jpg"
 
 const Contact = () => {
   return (
@@ -29,7 +30,7 @@ const Contact = () => {
         </div>
         <div className="col-md-6">
           <img
-            src="https://via.placeholder.com/500x300"
+            src={v1}
             alt="Contact Us"
             className="img-fluid rounded shadow"
           />

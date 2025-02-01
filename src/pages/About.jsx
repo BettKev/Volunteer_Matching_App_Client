@@ -1,4 +1,5 @@
 import React from "react";
+import v1 from "../assets/v1.jpg"
 
 const About = () => {
   return (
@@ -23,7 +24,7 @@ const About = () => {
         </div>
         <div className="col-md-6">
           <img
-            src="https://via.placeholder.com/500x300"
+            src={v1}
             alt="Mission"
             className="img-fluid rounded shadow"
           />
@@ -42,7 +43,7 @@ const About = () => {
         </div>
         <div className="col-md-6 order-md-1">
           <img
-            src="https://via.placeholder.com/500x300"
+            src={v1}
             alt="Vision"
             className="img-fluid rounded shadow"
           />
