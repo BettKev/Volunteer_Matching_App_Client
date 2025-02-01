@@ -140,7 +140,7 @@ const Dashboard = () => {
       .then((data) => {
         if (data.success) {
           alert("Successfully applied to the project!");
-          setProjects((prevProjects) => prevProjects.filter(project => project.project_id !== projectId));
+          setAppliedProjects((prev) => [...prev, { project_id: projectId }]); 
         } else {
           console.error("Error applying to project:", data.error);
         }
