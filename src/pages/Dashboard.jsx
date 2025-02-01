@@ -161,6 +161,11 @@ const Dashboard = () => {
       .then((data) => {
         if (data.success) {
           alert("Successfully canceled the application!");
+          // Update the state to remove the canceled application
+        setAppliedProjects((prev) =>
+          prev.filter((app) => app.project_id !== projectId)
+        );
+
         } else {
           console.error("Error canceling application:", data.error);
         }
