@@ -114,7 +114,7 @@ const Dashboard = () => {
       const data = await response.json();
 
       if (data.success) {
-        alert("Project deleted successfully!");
+        toast.success("Deleted successfully!", { position: "top-right", autoClose: 1000 });
         setProjects((prevProjects) => prevProjects.filter(project => project.project_id !== projectId));
       } else {
         alert(`Error: ${data.message}`);
@@ -141,7 +141,7 @@ const Dashboard = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          alert("Successfully applied to the project!");
+          toast.success("Successfully applied", { position: "top-right", autoClose: 1000 });
           setAppliedProjects((prev) => [...prev, { project_id: projectId }]); 
         } else {
           console.error("Error applying to project:", data.error);
@@ -162,7 +162,7 @@ const Dashboard = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          alert("Successfully canceled the application!");
+          toast.success("Cancelled successfully!", { position: "top-right", autoClose: 1000 });
           // Update the state to remove the canceled application
         setAppliedProjects((prev) =>
           prev.filter((app) => app.project_id !== projectId)
