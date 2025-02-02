@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate , Link} from "react-router-dom";
 import apiUrl from "../config"
-import { toast, ToastContainer } from "react-toastify"; // Import ToastContainer
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify"; // Import ToastContainer
+
 
 const Signup = () => {
   // Variable to hold base api endpoint
@@ -60,8 +60,8 @@ const Signup = () => {
       }
     } catch (error) {
       setError("An error occurred. Please try again.");
-      // Show error toast notification
-      toast.error(error, { position: "top-right", autoClose: 3000 });
+      // // Show error toast notification
+      // toast.error(error, { position: "top-right", autoClose: 3000 });
     } finally {
       setIsLoading(false);
     }
@@ -140,8 +140,7 @@ const Signup = () => {
           Already have an account? <Link to="/login" className="text-primary">Login</Link>
         </p>
       </div>
-      {/* Toast Container to display notifications */}
-      <ToastContainer />
+      
     </div>
   );
 };
