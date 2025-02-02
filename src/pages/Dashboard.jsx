@@ -4,6 +4,7 @@ import apiUrl from "../config";
 import Profile from "../components/Profile";
 import Settings from "../components/Settings";
 import CreateProject from "../components/CreateProject";
+import { toast } from "react-toastify";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -91,6 +92,7 @@ const Dashboard = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("access_token");
+    toast.success("Logout successful!", { position: "top-right", autoClose: 1000 });
     navigate("/login");
   };
 
