@@ -46,7 +46,7 @@ const Footer = () => {
 
           {/* Right: Branding */}
           <div className="col-md-4 text-md-end">
-            <p className="mb-0">Built with ❤️ by Your Team</p>
+            <p className="mb-0">Built by Bett Kevin</p>
           </div>
         </div>
       </div>
