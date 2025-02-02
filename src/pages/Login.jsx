@@ -28,7 +28,7 @@ function Login() {
         localStorage.setItem("access_token", data.access_token);
 
         // Show success toast notification
-        toast.success("Login successful!", { position: "top-right", autoClose: 3000 });
+        toast.success("Login successful!", { position: "top-right", autoClose: 1000 });
 
         navigate("/dashboard");
       } else {
@@ -36,11 +36,11 @@ function Login() {
         // setError(errorMessage);
 
         // Show error toast notification
-        toast.error(errorMessage, { position: "top-right", autoClose: 3000 });
+        toast.error(errorMessage, { position: "top-right", autoClose: 1000 });
       }
     } catch (error) {
       setError("An error occurred while trying to log in.");
-      toast.error("An error occurred while trying to log in.", { position: "top-right", autoClose: 3000 });
+      toast.error("An error occurred while trying to log in.", { position: "top-right", autoClose: 1000 });
     } finally {
       setIsLoading(false);
     }

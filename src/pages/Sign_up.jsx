@@ -44,7 +44,7 @@ const Signup = () => {
         setFormData({ name: "", email: "", password: "", role: "volunteer" });
         
         // Show success toast notification
-        toast.success("Registration successful!", { position: "top-right", autoClose: 3000 });
+        toast.success("Registration successful!", { position: "top-right", autoClose: 1000 });
 
         // Redirect to the login page after a brief delay
         setTimeout(() => navigate("/login"), 2000);
@@ -52,16 +52,16 @@ const Signup = () => {
         setFieldErrors(data.error);
 
         // Show error toast notification
-        toast.error(data.error, { position: "top-right", autoClose: 3000 });
+        toast.error(data.error, { position: "top-right", autoClose: 1000 });
       } else {
         // setError(data.error || "An error occurred.");
         // Show error toast notification
-        toast.error(data.error, { position: "top-right", autoClose: 3000 });
+        toast.error(data.error, { position: "top-right", autoClose: 1000 });
       }
     } catch (error) {
       setError("An error occurred. Please try again.");
-      // // Show error toast notification
-      // toast.error(error, { position: "top-right", autoClose: 3000 });
+      // Show error toast notification
+      toast.error(error, { position: "top-right", autoClose: 1000 });
     } finally {
       setIsLoading(false);
     }
