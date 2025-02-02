@@ -54,13 +54,13 @@ const Navbar = () => {
                 Contact
               </Link>
             </li>
-            {isLoggedIn && (
+            
               <li className="nav-item">
                 <Link className="nav-link btn btn-primary text-white px-3" to="/dashboard">
                   Dashboard
                 </Link>
               </li>
-            )}
+           
           </ul>
         </div>
       </div>
