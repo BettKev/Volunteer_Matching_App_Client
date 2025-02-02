@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import apiUrl from "../config";
 
 const Footer = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -26,7 +27,7 @@ const Footer = () => {
           {/* Center: API & Status Links */}
           <div className="col-md-4 my-2">
             <a
-              href="https://volunteer-matching-app-server.onrender.com/"
+              href={apiUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="btn btn-outline-light btn-sm me-2"
