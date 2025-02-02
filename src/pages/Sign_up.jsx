@@ -56,7 +56,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
+    <div className="d-flex justify-content-center align-items-center vh-100 bg-dark">
       <div className="card shadow-lg p-4" style={{ width: "100%", maxWidth: "400px" }}>
         <h1 className="text-center mb-4">Sign Up</h1>
         {message && <div className="alert alert-success">{message}</div>}
