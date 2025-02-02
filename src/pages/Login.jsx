@@ -1,47 +1,49 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
+import { Link, useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify"; // Import ToastContainer
+import "react-toastify/dist/ReactToastify.css";
 import apiUrl from "../config";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");  // To show any errors
-  const [isLoading, setIsLoading] = useState(false);  // To show loading state
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");  // Reset any previous errors
-    setIsLoading(true);  // Set loading state to true while awaiting response
+    setError("");
+    setIsLoading(true);
 
-    // Send a POST request to the Flask login route
     try {
       const response = await fetch(`${apiUrl}/login`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        // If login is successful, store the JWT token in localStorage
         localStorage.setItem("access_token", data.access_token);
-        // console.log("Saved Token:", localStorage.getItem("access_token"));
 
+        // Show success toast notification
+        toast.success("Login successful!", { position: "top-right", autoClose: 3000 });
 
-        // Redirect the user to the dashboard
         navigate("/dashboard");
       } else {
-        // If there's an error, display it
-        setError(data.error || "An error occurred.");
+        const errorMessage = data.error || "An error occurred.";
+        setError(errorMessage);
+
+        // Show error toast notification
+        toast.error(errorMessage, { position: "top-right", autoClose: 3000 });
       }
     } catch (error) {
       setError("An error occurred while trying to log in.");
+      toast.error("An error occurred while trying to log in.", { position: "top-right", autoClose: 3000 });
     } finally {
-      setIsLoading(false);  // Reset loading state
+      setIsLoading(false);
     }
   };
 
@@ -49,7 +51,7 @@ function Login() {
     <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
       <div className="card shadow-lg p-4" style={{ maxWidth: "400px", width: "100%" }}>
         <h3 className="text-center mb-4">Login</h3>
-        {error && <div className="alert alert-danger">{error}</div>} {/* Display error if any */}
+        {error && <div className="alert alert-danger">{error}</div>}
         <form onSubmit={handleSubmit}>
           <div className="form-group mb-3">
             <label htmlFor="email" className="form-label">Email address</label>
@@ -85,6 +87,9 @@ function Login() {
           Don't have an account? <Link to="/signup" className="text-primary">Sign Up</Link>
         </p>
       </div>
+      
+      {/* Toast Container to display notifications */}
+      <ToastContainer />
     </div>
   );
 }

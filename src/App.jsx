@@ -12,6 +12,8 @@ import Profile from "./components/Profile";
 import Settings from "./components/Settings";
 import EditProject from "./components/EditProject";
 import CreateProjectModal from "./components/CreateProject";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const App = () => {
   return (
     <Router>
@@ -30,6 +32,8 @@ const App = () => {
           <Route path="/projects/create" element={<CreateProjectModal />} />
         </Routes>
       </Layout>
+       {/* Global ToastContainer */}
+       <ToastContainer position="top-right" autoClose={3000} />
     </Router>
   );
 };
