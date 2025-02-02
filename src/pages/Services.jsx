@@ -2,10 +2,10 @@ import React from "react";
 
 const Services = () => {
   return (
-    <div className="container mt-5">
+    <div className="container-fluid mt-5 text-white bg-dark p-4 rounded shadow-lg">
       {/* Page Header */}
       <div className="text-center mb-5">
-        <h1 className="display-4 fw-bold">Our Services</h1>
+        <h1 className="display-4 fw-bold text-warning">Our Services</h1>
         <p className="lead">
           We provide a wide range of services to support individuals and organizations in making meaningful connections.
         </p>
@@ -14,7 +14,7 @@ const Services = () => {
       {/* Services Section */}
       <div className="row">
         <div className="col-md-4 mb-4">
-          <div className="card shadow h-100">
+          <div className="card bg-dark text-warning shadow-lg h-100">
             <div className="card-body">
               <h5 className="card-title fw-bold">Volunteer Matching</h5>
               <p className="card-text">
@@ -24,7 +24,7 @@ const Services = () => {
           </div>
         </div>
         <div className="col-md-4 mb-4">
-          <div className="card shadow h-100">
+          <div className="card bg-dark text-warning shadow-lg h-100">
             <div className="card-body">
               <h5 className="card-title fw-bold">Organization Support</h5>
               <p className="card-text">
@@ -34,7 +34,7 @@ const Services = () => {
           </div>
         </div>
         <div className="col-md-4 mb-4">
-          <div className="card shadow h-100">
+          <div className="card bg-dark text-warning shadow-lg h-100">
             <div className="card-body">
               <h5 className="card-title fw-bold">Community Building</h5>
               <p className="card-text">
@@ -48,7 +48,7 @@ const Services = () => {
       {/* Additional Services Section */}
       <div className="row mt-4">
         <div className="col-md-6 mb-4">
-          <div className="card shadow h-100">
+          <div className="card bg-dark text-warning shadow-lg h-100">
             <div className="card-body">
               <h5 className="card-title fw-bold">Training & Workshops</h5>
               <p className="card-text">
@@ -58,7 +58,7 @@ const Services = () => {
           </div>
         </div>
         <div className="col-md-6 mb-4">
-          <div className="card shadow h-100">
+          <div className="card bg-dark text-warning shadow-lg h-100">
             <div className="card-body">
               <h5 className="card-title fw-bold">Resource Sharing</h5>
               <p className="card-text">
@@ -70,7 +70,7 @@ const Services = () => {
       </div>
 
       {/* Call-to-Action Section */}
-      <div className="text-center mt-5 bg-primary text-white p-4 rounded shadow">
+      <div className="text-center mt-5 bg-secondary text-warning p-4 rounded shadow-lg">
         <h3 className="fw-bold">Ready to Explore?</h3>
         <p className="mt-3">
           Whether you're an individual or an organization, we're here to support you every step of the way.

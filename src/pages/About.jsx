@@ -3,7 +3,7 @@ import v1 from "../assets/v1.jpg";
 
 const About = () => {
   return (
-    <div className="container mt-5 text-white bg-dark p-4 rounded shadow-lg">
+    <div className="container-fluid mt-5 text-white bg-dark p-4 rounded shadow-lg">
       {/* Page Header */}
       <div className="text-center mb-5">
         <h1 className="display-4 fw-bold text-warning">About Us</h1>

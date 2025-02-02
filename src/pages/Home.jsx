@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
-    <div className="home-container text-white bg-dark">
+    <div className="container-fluid text-white bg-dark">
       {/* Hero Section */}
       <div className="hero-section text-center p-5 rounded-lg shadow-lg text-gold">
         <h1 className="display-3 fw-bold">Volunteer Matching</h1>
