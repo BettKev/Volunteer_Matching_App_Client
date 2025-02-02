@@ -18,7 +18,7 @@ const Footer = () => {
         <div className="row align-items-center">
           {/* Left: Copyright & Time */}
           <div className="col-md-4 text-md-start">
-            <p className="mb-0">© {new Date().getFullYear()} My Website. All rights reserved.</p>
+            <p className="mb-0">© {new Date().getFullYear()} Volunteer Matching App. All rights reserved.</p>
             <small className="text-white">
               Current Time: {currentTime.toLocaleTimeString()}
             </small>
