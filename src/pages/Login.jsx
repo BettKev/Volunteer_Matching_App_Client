@@ -34,7 +34,7 @@ function Login() {
         navigate("/dashboard");
       } else {
         const errorMessage = data.error || "An error occurred.";
-        setError(errorMessage);
+        // setError(errorMessage);
 
         // Show error toast notification
         toast.error(errorMessage, { position: "top-right", autoClose: 3000 });
