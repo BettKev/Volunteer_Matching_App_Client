@@ -25,7 +25,7 @@ const EditProject = () => {
           throw new Error("Unauthorized: Only organizations can update their projects.");
         }
         if (response.status === 404) {
-          throw new Error("You can only update My projects");
+          throw new Error("You can only update your organizations projects");
         }
         return response.json();
       })
