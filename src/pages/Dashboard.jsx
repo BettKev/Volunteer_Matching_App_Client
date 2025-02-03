@@ -117,11 +117,11 @@ const Dashboard = () => {
         toast.success("Deleted successfully!", { position: "top-right", autoClose: 1000 });
         setProjects((prevProjects) => prevProjects.filter(project => project.project_id !== projectId));
       } else {
-        alert(`Error: ${data.message}`);
+       toast.error(`Error: ${data.message}`, { position: "top-right", autoClose: 1000 })
       }
     } catch (error) {
       console.error("Error deleting project:", error);
-      alert("An error occurred while deleting the project.");
+      toast.error("An error occurred while deleting the project.", { position: "top-right", autoClose: 1000 });
     }
   };
 
